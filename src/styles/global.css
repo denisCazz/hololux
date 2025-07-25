@@ -93,9 +93,31 @@ a,
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
+/* Mobile-optimized glass panel - less expensive blur */
+.mobile-glass-panel {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+  .mobile-glass-panel {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+}
+
 .dark .glass-panel {
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .mobile-glass-panel {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 /* Smooth scroll indicator animation */
@@ -117,6 +139,100 @@ a,
 .control-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* New floating control buttons */
+.floating-control-btn {
+  position: relative;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-control-btn:hover {
+  transform: translateY(-3px);
+}
+
+.floating-control-btn:active {
+  transform: translateY(-1px) scale(0.95);
+}
+
+/* Mobile-optimized control buttons */
+.mobile-control-btn {
+  position: relative;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.mobile-control-btn:hover {
+  transform: scale(1.05);
+}
+
+.mobile-control-btn:active {
+  transform: scale(0.95);
+}
+
+.mobile-control-btn:focus-visible {
+  outline: 2px solid #60A5FA;
+  outline-offset: 2px;
+}
+
+/* Enhanced tooltip styling */
+.tooltip {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  z-index: 100;
+}
+
+/* Focus states for accessibility */
+.floating-control-btn:focus-visible {
+  outline: 2px solid #60A5FA;
+  outline-offset: 3px;
+}
+
+/* Pulsing effect for better visibility */
+.floating-control-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.floating-control-btn:hover::before {
+  opacity: 1;
+}
+
+/* Mobile optimization for control buttons */
+@media (max-width: 768px) {
+  .control-button:hover {
+    transform: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .floating-control-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  .floating-control-btn .tooltip {
+    display: none;
+  }
+  
+  /* Compact mobile control buttons */
+  .mobile-control-btn:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Remove expensive effects on mobile */
+  .floating-control-btn::before {
+    display: none;
+  }
 }
 
 /* Smooth header to content transition */
@@ -173,6 +289,27 @@ nav {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+  
+  /* Disable expensive animations on mobile */
+  .animate-pulse {
+    animation: none;
+  }
+  
+  /* Simplify transforms on mobile */
+  .transform {
+    will-change: auto;
+  }
+  
+  /* Reduce backdrop-filter usage */
+  .backdrop-blur-md {
+    backdrop-filter: blur(4px);
+  }
+  
+  /* Optimize scroll performance */
+  * {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 /* Accessibility: Respect reduced motion preference */
@@ -198,6 +335,14 @@ nav {
 .ai-result-card,
 .chart-container {
   will-change: transform;
+}
+
+/* CSS Containment for better performance */
+@supports (content-visibility: auto) {
+  section {
+    content-visibility: auto;
+    contain-intrinsic-size: 800px;
+  }
 }
 
 /* Focus styles for accessibility */

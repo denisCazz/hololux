@@ -191,7 +191,9 @@ const { title = "Holo Lux - AR Systems", description = "A New Paradigm for Energ
         ai_result2_desc: "L'85% dei consumatori considera l'efficienza energetica un fattore chiave",
         ai_result3_title: "Opportunità di Mercato",
         ai_result3_desc: "Potenziale mercato di $15 miliardi entro il 2030 per display AR efficienti",
-        footer_text: "© 2025 Holo Lux. Innovazione nel futuro dei display AR."
+        footer_text: "© 2025 Holo Lux. Innovazione nel futuro dei display AR.",
+        theme_tooltip: "Cambia tema",
+        language_tooltip: "Cambia lingua"
       },
       en: {
         main_title: "Holo Lux",
@@ -264,7 +266,9 @@ const { title = "Holo Lux - AR Systems", description = "A New Paradigm for Energ
         ai_result2_desc: "85% of consumers consider energy efficiency a key factor",
         ai_result3_title: "Market Opportunity", 
         ai_result3_desc: "Potential $15 billion market by 2030 for efficient AR displays",
-        footer_text: "© 2025 Holo Lux. Innovation in the future of AR displays."
+        footer_text: "© 2025 Holo Lux. Innovation in the future of AR displays.",
+        theme_tooltip: "Change theme",
+        language_tooltip: "Change language"
       }
     };
 
@@ -281,16 +285,13 @@ const { title = "Holo Lux - AR Systems", description = "A New Paradigm for Energ
       
       const langBtn = document.getElementById('lang-toggle-btn');
       if (langBtn) {
-        const flagSpan = langBtn.querySelector('span:first-child');
-        const textSpan = langBtn.querySelector('span:last-child');
+        const flagSpan = langBtn.querySelector('span');
         
-        if (flagSpan && textSpan) {
+        if (flagSpan) {
           if (currentLanguage === 'it') {
             flagSpan.textContent = '🇺🇸';
-            textSpan.textContent = 'English';
           } else {
             flagSpan.textContent = '🇮🇹';
-            textSpan.textContent = 'Italiano';
           }
         }
       }
@@ -589,6 +590,7 @@ const { title = "Holo Lux - AR Systems", description = "A New Paradigm for Energ
     function initializeScrollAnimations() {
       // Respect user's reduced motion preference
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const isMobile = window.innerWidth <= 768;
       
       if (prefersReducedMotion.matches) {
         // If user prefers reduced motion, just show elements immediately
@@ -599,16 +601,16 @@ const { title = "Holo Lux - AR Systems", description = "A New Paradigm for Energ
       }
       
       const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: isMobile ? 0.05 : 0.1,
+        rootMargin: isMobile ? '0px 0px -20px 0px' : '0px 0px -50px 0px'
       };
 
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('in-view');
-            // Add staggered animation for grid items
-            if (entry.target.classList.contains('grid')) {
+            // Add staggered animation for grid items (desktop only for performance)
+            if (entry.target.classList.contains('grid') && !isMobile) {
               const children = entry.target.children;
               Array.from(children).forEach((child, index) => {
                 setTimeout(() => {
@@ -617,6 +619,8 @@ const { title = "Holo Lux - AR Systems", description = "A New Paradigm for Energ
                 }, index * 100);
               });
             }
+            // Unobserve element after animation to improve performance
+            observer.unobserve(entry.target);
           }
         });
       }, observerOptions);
@@ -626,14 +630,16 @@ const { title = "Holo Lux - AR Systems", description = "A New Paradigm for Energ
         observer.observe(el);
       });
 
-      // Add parallax effect to header
-      window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const header = document.querySelector('header');
-        if (header) {
-          header.style.transform = `translateY(${scrolled * 0.5}px)`;
-        }
-      });
+      // Add parallax effect to header (desktop only for performance)
+      if (window.innerWidth > 768) {
+        window.addEventListener('scroll', () => {
+          const scrolled = window.pageYOffset;
+          const header = document.querySelector('header');
+          if (header) {
+            header.style.transform = `translateY(${scrolled * 0.3}px)`;
+          }
+        });
+      }
     }
   </script>
 </body>
