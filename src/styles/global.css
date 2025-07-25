@@ -337,11 +337,24 @@ nav {
   will-change: transform;
 }
 
+/* Enhanced FlowStep animations */
+.flow-step-container {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.flow-step-container:hover {
+  will-change: transform;
+}
+
 /* CSS Containment for better performance */
 @supports (content-visibility: auto) {
   section {
     content-visibility: auto;
     contain-intrinsic-size: 800px;
+  }
+  
+  .flow-step-container {
+    contain: layout style paint;
   }
 }
 
