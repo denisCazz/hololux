@@ -1,0 +1,35 @@
+---
+import Layout from '../layout/mainLayout.astro';
+import Header from '../components/Header.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import PrivacyPolicy from '../components/PrivacyPolicy.astro';
+import TermsOfService from '../components/TermsOfService.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+---
+
+<Layout title="Privacy Policy & Terms - Holo Lux" description="Privacy Policy e Termini di Servizio per Holo Lux - Nessuna raccolta dati">
+  <Header />
+  <Navigation />
+  
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16 mt-4">
+    <!-- Privacy Policy Section -->
+    <PrivacyPolicy />
+    
+    <!-- Terms of Service Section -->
+    <TermsOfService />
+    
+    <!-- Back to Home -->
+    <div class="text-center py-16">
+      <a href="/" class="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+        </svg>
+        <span data-lang-key="back_to_home">Torna alla Home</span>
+      </a>
+    </div>
+  </main>
+
+  <Footer />
+  <CookieBanner />
+</Layout>

@@ -1,0 +1,229 @@
+---
+// Cookie banner component - no data collection policy
+---
+
+<div id="cookie-banner" class="fixed top-0 sm:bottom-0 sm:top-auto left-0 right-0 z-[9999] bg-white/99 dark:bg-gray-900/99 backdrop-blur-lg border-b-2 sm:border-b-0 sm:border-t-2 border-gray-200 dark:border-gray-700 shadow-2xl transform -translate-y-full sm:translate-y-full transition-transform duration-500 ease-out">
+  <!-- Mobile-first enhanced container -->
+  <div class="px-4 py-4 sm:px-4 sm:py-4 md:px-6 md:py-6">
+    <!-- Enhanced mobile layout -->
+    <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 sm:space-x-4">
+      
+      <!-- Cookie info - enhanced for mobile visibility -->
+      <div class="flex-1">
+        <div class="flex items-start space-x-3 sm:space-x-3">
+          <!-- Icon - more prominent on mobile -->
+          <div class="flex-shrink-0 mt-1">
+            <div class="w-8 h-8 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
+              <svg class="w-4 h-4 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Content - enhanced spacing and contrast -->
+          <div class="flex-1 min-w-0">
+            <h3 class="text-sm sm:text-sm font-bold text-gray-900 dark:text-white mb-2" data-lang-key="cookie_title">
+              Informazioni sui Cookie
+            </h3>
+            <!-- Mobile: enhanced shorter text, Desktop: full text -->
+            <p class="text-sm sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+              <span class="sm:hidden" data-lang-key="cookie_message_short">Solo cookie tecnici, nessun dato raccolto.</span>
+              <span class="hidden sm:inline" data-lang-key="cookie_message">Questo sito utilizza solo cookie tecnici essenziali per il funzionamento. Non raccogliamo né condividiamo alcun dato personale.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Action buttons - enhanced mobile spacing -->
+      <div class="flex items-center justify-center sm:justify-end space-x-3 sm:space-x-3 flex-shrink-0 pt-2 sm:pt-0">
+        <button id="privacy-link" class="text-sm sm:text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold underline transition-colors duration-200 px-2 py-1" data-lang-key="privacy_policy">
+          Privacy
+        </button>
+        <button id="accept-cookies" class="px-4 py-2 sm:px-4 sm:py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm sm:text-sm font-bold rounded-lg sm:rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 whitespace-nowrap min-w-[80px]" data-lang-key="accept_cookies">
+          Accetta
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Cookie banner functionality
+  function initializeCookieBanner() {
+    const banner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('accept-cookies');
+    const privacyLink = document.getElementById('privacy-link');
+    
+    // Check if cookies were already accepted
+    const cookiesAccepted = localStorage.getItem('hololux-cookies-accepted');
+    
+    if (cookiesAccepted) {
+      // Hide banner if cookies already accepted
+      if (banner) {
+        banner.style.display = 'none';
+      }
+    } else {
+      // Show banner for new users with animation
+      if (banner) {
+        banner.style.display = 'block';
+        
+        setTimeout(() => {
+          // Remove both possible translate classes
+          banner.classList.remove('translate-y-full', '-translate-y-full');
+          banner.style.animation = 'slideInFromTop 0.6s ease-out forwards';
+          console.log('Cookie banner shown with animation');
+        }, 1000);
+      }
+    }
+    
+    // Accept cookies
+    if (acceptBtn) {
+      acceptBtn.addEventListener('click', () => {
+        localStorage.setItem('hololux-cookies-accepted', 'true');
+        if (banner) {
+          // Check if mobile or desktop for correct hide animation
+          const isMobile = window.innerWidth <= 640;
+          if (isMobile) {
+            banner.classList.add('-translate-y-full');
+          } else {
+            banner.classList.add('translate-y-full');
+          }
+          setTimeout(() => {
+            banner.style.display = 'none';
+          }, 500);
+        }
+      });
+    }
+    
+    // Privacy policy link
+    if (privacyLink) {
+      privacyLink.addEventListener('click', () => {
+        window.open('#privacy', '_self');
+      });
+    }
+  }
+  
+  // Initialize when DOM is ready
+  document.addEventListener('DOMContentLoaded', initializeCookieBanner);
+  
+  // Add a test function to reset cookie banner (for development)
+  (window as any).resetCookieBanner = function() {
+    localStorage.removeItem('hololux-cookies-accepted');
+    const banner = document.getElementById('cookie-banner');
+    if (banner) {
+      banner.style.display = 'block';
+      banner.classList.remove('translate-y-full', '-translate-y-full');
+      banner.style.transform = 'translateY(0)';
+      banner.style.animation = 'slideInFromTop 0.6s ease-out forwards';
+      console.log('Cookie banner reset and shown');
+    }
+  };
+  
+  // Force show banner for testing (temporary)
+  (window as any).showCookieBanner = function() {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) {
+      banner.style.display = 'block';
+      banner.style.position = 'fixed';
+      banner.style.bottom = '0';
+      banner.style.left = '0';
+      banner.style.right = '0';
+      banner.style.zIndex = '99999';
+      banner.style.transform = 'translateY(0)';
+      console.log('Cookie banner forced to show');
+    }
+  };
+</script>
+
+<style>
+  #cookie-banner {
+    backdrop-filter: blur(16px);
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.15);
+    border-top: 2px solid rgba(59, 130, 246, 0.3);
+    min-height: 80px;
+  }
+  
+  .dark #cookie-banner {
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.4);
+    border-top: 2px solid rgba(99, 179, 255, 0.4);
+  }
+  
+  /* Enhanced mobile visibility */
+  @media (max-width: 640px) {
+    #cookie-banner {
+      background: rgba(255, 255, 255, 0.98) !important;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.2);
+      min-height: 100px;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    
+    .dark #cookie-banner {
+      background: rgba(17, 24, 39, 0.98) !important;
+      box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.5);
+    }
+  }
+  
+  /* Extra small devices */
+  @media (max-width: 480px) {
+    #cookie-banner {
+      min-height: 110px;
+      font-size: 16px; /* Prevent zoom on iOS */
+    }
+  }
+  
+  /* Ensure buttons are touch-friendly */
+  #cookie-banner button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Bounce animation for attention */
+  @keyframes bounceInUp {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    60% {
+      transform: translateY(-10px);
+      opacity: 1;
+    }
+    80% {
+      transform: translateY(2px);
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Slide in from top animation for mobile */
+  @keyframes slideInFromTop {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    60% {
+      transform: translateY(10px);
+      opacity: 1;
+    }
+    80% {
+      transform: translateY(-2px);
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Mobile: shadow pointing down, Desktop: shadow pointing up */
+  @media (max-width: 640px) {
+    #cookie-banner {
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    .dark #cookie-banner {
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+    }
+  }
+</style>

@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import CookieBanner from '../components/CookieBanner.astro';
 
 export interface Props {
   title?: string;
@@ -114,6 +115,10 @@ const { title = "Holo Lux - AR Systems", description = "A New Paradigm for Energ
   <button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
   </button>
+  
+  <!-- Cookie Banner -->
+  <CookieBanner />
+  
   <slot />
   
   <!-- Inline JavaScript for functionality -->
@@ -193,7 +198,52 @@ const { title = "Holo Lux - AR Systems", description = "A New Paradigm for Energ
         ai_result3_desc: "Potenziale mercato di $15 miliardi entro il 2030 per display AR efficienti",
         footer_text: "© 2025 Holo Lux. Innovazione nel futuro dei display AR.",
         theme_tooltip: "Cambia tema",
-        language_tooltip: "Cambia lingua"
+        language_tooltip: "Cambia lingua",
+        // Privacy and Cookie translations
+        cookie_title: "Informazioni sui Cookie",
+        cookie_message: "Questo sito utilizza solo cookie tecnici essenziali per il funzionamento. Non raccogliamo né condividiamo alcun dato personale.",
+        cookie_message_short: "Solo cookie tecnici, nessun dato raccolto.",
+        privacy_policy: "Privacy Policy",
+        accept_cookies: "Accetta",
+        privacy_title: "Privacy Policy",
+        privacy_subtitle: "La tua privacy è importante per noi. Ecco come proteggiamo i tuoi dati.",
+        no_data_collection_title: "🛡️ Nessuna Raccolta Dati",
+        no_data_collection_desc: "Holo Lux non raccoglie, memorizza o condivide alcun dato personale. Il nostro sito è completamente anonimo e rispettoso della privacy.",
+        technical_cookies_title: "🍪 Cookie Tecnici",
+        technical_cookies_desc: "Utilizziamo solo cookie tecnici essenziali per:",
+        cookie_theme: "Memorizzare la preferenza del tema (chiaro/scuro)",
+        cookie_language: "Salvare la lingua selezionata",
+        cookie_banner: "Ricordare l'accettazione del banner cookie",
+        no_third_party_title: "🚫 Nessun Servizio di Terze Parti",
+        no_third_party_desc: "Non utilizziamo servizi di analisi, tracking o pubblicità di terze parti. Nessun Google Analytics, Facebook Pixel o simili.",
+        local_storage_title: "💾 Memorizzazione Locale",
+        local_storage_desc: "Le preferenze vengono salvate solo nel tuo browser (localStorage) e non vengono mai trasmesse ai nostri server.",
+        contact_title: "📧 Contatti",
+        contact_desc: "Per domande su questa Privacy Policy, puoi contattarci attraverso la sezione contatti del sito.",
+        last_updated: "Ultimo aggiornamento: 25 Luglio 2025",
+        gdpr_compliant: "100% GDPR Compliant - Privacy by Design",
+        terms_title: "Termini di Servizio",
+        terms_subtitle: "Condizioni d'uso per il sito web Holo Lux.",
+        terms_acceptance_title: "📋 Accettazione dei Termini",
+        terms_acceptance_desc: "Utilizzando il sito web Holo Lux, accetti automaticamente questi termini di servizio. Se non sei d'accordo, ti preghiamo di non utilizzare il sito.",
+        terms_use_title: "🌐 Uso del Sito Web",
+        terms_use_desc: "Il sito Holo Lux è fornito esclusivamente a scopo informativo e di ricerca. È consentito:",
+        terms_allowed_view: "Visualizzare e navigare il contenuto",
+        terms_allowed_download: "Scaricare materiali per uso personale",
+        terms_allowed_share: "Condividere il link del sito",
+        terms_ip_title: "💡 Proprietà Intellettuale",
+        terms_ip_desc: "Tutti i contenuti del sito, inclusi testi, grafici, design e tecnologie descritte, sono protetti da diritti d'autore e proprietà intellettuale.",
+        terms_research_title: "🔬 Scopo di Ricerca",
+        terms_research_desc: "Il progetto Holo Lux è presentato a scopo di ricerca e sviluppo tecnologico. Le informazioni fornite sono teoriche e sperimentali.",
+        terms_disclaimer_title: "⚠️ Disclaimer",
+        terms_disclaimer_desc: "Le informazioni sono fornite \"così come sono\" senza garanzie di accuratezza o completezza. L'uso delle informazioni è a proprio rischio.",
+        terms_warranty_title: "🛡️ Limitazione di Garanzia",
+        terms_warranty_desc: "Il sito è fornito senza garanzie di alcun tipo. Non garantiamo che il servizio sia ininterrotto o privo di errori.",
+        terms_changes_title: "🔄 Modifiche ai Termini",
+        terms_changes_desc: "Ci riserviamo il diritto di modificare questi termini in qualsiasi momento. Le modifiche saranno pubblicate su questa pagina.",
+        terms_last_updated: "Ultimo aggiornamento: 25 Luglio 2025",
+        legal_notice: "Progetto di Ricerca Accademica",
+        back_to_home: "Torna alla Home"
       },
       en: {
         main_title: "Holo Lux",
@@ -268,7 +318,52 @@ const { title = "Holo Lux - AR Systems", description = "A New Paradigm for Energ
         ai_result3_desc: "Potential $15 billion market by 2030 for efficient AR displays",
         footer_text: "© 2025 Holo Lux. Innovation in the future of AR displays.",
         theme_tooltip: "Change theme",
-        language_tooltip: "Change language"
+        language_tooltip: "Change language",
+        // Privacy and Cookie translations
+        cookie_title: "Cookie Information",
+        cookie_message: "This site only uses essential technical cookies for functionality. We do not collect or share any personal data.",
+        cookie_message_short: "Technical cookies only, no data collected.",
+        privacy_policy: "Privacy Policy",
+        accept_cookies: "Accept",
+        privacy_title: "Privacy Policy",
+        privacy_subtitle: "Your privacy is important to us. Here's how we protect your data.",
+        no_data_collection_title: "🛡️ No Data Collection",
+        no_data_collection_desc: "Holo Lux does not collect, store or share any personal data. Our site is completely anonymous and privacy-respecting.",
+        technical_cookies_title: "🍪 Technical Cookies",
+        technical_cookies_desc: "We only use essential technical cookies for:",
+        cookie_theme: "Storing theme preference (light/dark)",
+        cookie_language: "Saving selected language",
+        cookie_banner: "Remembering cookie banner acceptance",
+        no_third_party_title: "🚫 No Third-Party Services",
+        no_third_party_desc: "We don't use third-party analytics, tracking or advertising services. No Google Analytics, Facebook Pixel or similar.",
+        local_storage_title: "💾 Local Storage",
+        local_storage_desc: "Preferences are saved only in your browser (localStorage) and never transmitted to our servers.",
+        contact_title: "📧 Contact",
+        contact_desc: "For questions about this Privacy Policy, you can contact us through the site's contact section.",
+        last_updated: "Last updated: July 25, 2025",
+        gdpr_compliant: "100% GDPR Compliant - Privacy by Design",
+        terms_title: "Terms of Service",
+        terms_subtitle: "Terms of use for the Holo Lux website.",
+        terms_acceptance_title: "📋 Terms Acceptance",
+        terms_acceptance_desc: "By using the Holo Lux website, you automatically accept these terms of service. If you disagree, please do not use the site.",
+        terms_use_title: "🌐 Website Use",
+        terms_use_desc: "The Holo Lux site is provided exclusively for informational and research purposes. You may:",
+        terms_allowed_view: "View and navigate content",
+        terms_allowed_download: "Download materials for personal use",
+        terms_allowed_share: "Share the site link",
+        terms_ip_title: "💡 Intellectual Property",
+        terms_ip_desc: "All site content, including texts, graphics, design and described technologies, are protected by copyright and intellectual property rights.",
+        terms_research_title: "🔬 Research Purpose",
+        terms_research_desc: "The Holo Lux project is presented for research and technological development purposes. The information provided is theoretical and experimental.",
+        terms_disclaimer_title: "⚠️ Disclaimer",
+        terms_disclaimer_desc: "Information is provided \"as is\" without warranties of accuracy or completeness. Use of information is at your own risk.",
+        terms_warranty_title: "🛡️ Warranty Limitation",
+        terms_warranty_desc: "The site is provided without warranties of any kind. We do not guarantee that the service will be uninterrupted or error-free.",
+        terms_changes_title: "🔄 Terms Changes",
+        terms_changes_desc: "We reserve the right to modify these terms at any time. Changes will be posted on this page.",
+        terms_last_updated: "Last updated: July 25, 2025",
+        legal_notice: "Academic Research Project",
+        back_to_home: "Back to Home"
       }
     };
 
