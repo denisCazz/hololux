@@ -1,0 +1,856 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = "Holo Lux - AR Systems", description = "A New Paradigm for Energy-Efficient AR Displays" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="it" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content={Astro.generator} />
+  <link rel="icon" type="image/x-icon" href="https://holo-lux.com/eng/assets/images/logp_solo.png">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  
+  <!-- Preload critical fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  
+  <!-- External dependencies -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  
+  <!-- MathJax for LaTeX formulas -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+  <!-- Page loading optimization -->
+  <style>
+    .page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    
+    .page-loader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .loader-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Scroll to top button */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 3rem;
+      height: 3rem;
+      background: linear-gradient(135deg, #0073E6, #0059B3);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(100px);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 115, 230, 0.3);
+      z-index: 1000;
+    }
+    
+    .scroll-to-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .scroll-to-top:hover {
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 8px 25px rgba(0, 115, 230, 0.4);
+    }
+    
+    .dark .scroll-to-top {
+      background: linear-gradient(135deg, #4DA6FF, #66B3FF);
+    }
+  </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+  <!-- Page loader -->
+  <div id="page-loader" class="page-loader">
+    <div class="loader-spinner"></div>
+  </div>
+  
+  <!-- Scroll to top button -->
+  <button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+  <slot />
+  
+  <!-- Inline JavaScript for functionality -->
+  <script is:inline>
+    // Multi-language support
+    const translations = {
+      it: {
+        main_title: "Holo Lux",
+        main_subtitle: "Un Nuovo Paradigma per Display AR Energeticamente Efficienti",
+        nav_efficiency: "Efficienza",
+        nav_challenges: "Sfide",
+        nav_solution: "Soluzione",
+        nav_roadmap: "Roadmap",
+        nav_ai_analysis: "Analisi AI",
+        efficiency_title: "Analisi dell'Efficienza Energetica",
+        efficiency_description: "Confronto tra tecnologie tradizionali e la nostra innovativa soluzione olografica",
+        consumption_chart_title: "Consumo Energetico per Tecnologia",
+        consumption_chart_caption: "Confronto del consumo energetico in mW tra diverse tecnologie di display AR",
+        efficiency_chart_title: "Efficienza Luminosa",
+        efficiency_chart_caption: "Efficacia luminosa misurata in lumen per watt",
+        transparency_chart_title: "Livelli di Trasparenza",
+        transparency_chart_caption: "Percentuale di trasparenza ottica per ciascuna tecnologia",
+        performance_title: "Metriche Chiave di Performance",
+        performance_description: "I nostri risultati rivoluzionari nel campo dei display AR",
+        power_reduction_title: "Riduzione Consumo",
+        power_reduction_desc: "del consumo energetico",
+        transparency_improvement_title: "Miglioramento Trasparenza",
+        transparency_improvement_desc: "di trasparenza ottica",
+        efficiency_gain_title: "Guadagno Efficienza",
+        efficiency_gain_desc: "di efficienza luminosa",
+        challenges_title: "Sfide Tecnologiche",
+        challenges_description: "Le principali limitazioni dei sistemi AR attuali che il nostro progetto affronta",
+        challenge_power_title: "Consumo Energetico Elevato",
+        challenge_power_desc: "I display attuali richiedono troppa energia per essere pratici in dispositivi portatili",
+        challenge_transparency_title: "Trasparenza Limitata",
+        challenge_transparency_desc: "La visibilità del mondo reale è compromessa dalla tecnologia display tradizionale",
+        challenge_efficiency_title: "Bassa Efficienza Luminosa",
+        challenge_efficiency_desc: "Conversione inefficiente dell'energia elettrica in luce visibile",
+        solution_title: "La Nostra Soluzione Olografica",
+        solution_description: "Un approccio innovativo che rivoluziona l'efficienza dei display AR",
+        solution_step1: "Generazione ologramma con laser a basso consumo",
+        solution_step2: "Modulazione ottica adattiva",
+        solution_step3: "Proiezione trasparente ad alta efficienza",
+        technology_comparison_title: "Confronto Tecnologico",
+        technology_comparison_description: "Come la nostra tecnologia si confronta con le soluzioni esistenti",
+        oled_title: "OLED Tradizionale",
+        oled_description: "Display organici a emissione di luce con limitazioni di trasparenza",
+        oled_rest: "Stato Inattivo",
+        oled_active: "Stato Attivo",
+        micro_led_title: "Micro-LED",
+        micro_led_description: "LED miniaturizzati con buone prestazioni ma consumo elevato",
+        micro_led_rest: "Stato Inattivo",
+        micro_led_active: "Stato Attivo",
+        holographic_title: "Sistema Olografico Holo Lux",
+        holographic_description: "La nostra soluzione rivoluzionaria con massima efficienza",
+        holographic_rest: "Stato Inattivo",
+        holographic_active: "Stato Attivo",
+        mirror: "Specchio",
+        transparent: "Trasparente",
+        roadmap_title: "Roadmap di Sviluppo",
+        roadmap_description: "Il nostro percorso verso la commercializzazione della tecnologia",
+        roadmap_step1_title: "Fase 1: Ricerca e Prototipazione",
+        roadmap_step1_desc: "Sviluppo dei prototipi iniziali e validazione dei concetti",
+        roadmap_step2_title: "Fase 2: Ottimizzazione e Test",
+        roadmap_step2_desc: "Miglioramento delle prestazioni e test di durata",
+        roadmap_step3_title: "Fase 3: Produzione Pilota",
+        roadmap_step3_desc: "Implementazione di una linea di produzione pilota",
+        roadmap_step4_title: "Fase 4: Commercializzazione",
+        roadmap_step4_desc: "Lancio del prodotto e distribuzione sul mercato",
+        ai_analysis_title: "Analisi AI del Mercato",
+        ai_analysis_description: "Insights generati dall'intelligenza artificiale sul potenziale di mercato",
+        ai_result1_title: "Previsione di Crescita",
+        ai_result1_desc: "Il mercato AR è previsto crescere del 40% annuo nei prossimi 5 anni",
+        ai_result2_title: "Domanda di Efficienza",
+        ai_result2_desc: "L'85% dei consumatori considera l'efficienza energetica un fattore chiave",
+        ai_result3_title: "Opportunità di Mercato",
+        ai_result3_desc: "Potenziale mercato di $15 miliardi entro il 2030 per display AR efficienti",
+        footer_text: "© 2025 Holo Lux. Innovazione nel futuro dei display AR."
+      },
+      en: {
+        main_title: "Holo Lux",
+        main_subtitle: "A New Paradigm for Energy-Efficient AR Displays",
+        nav_efficiency: "Efficiency",
+        nav_challenges: "Challenges", 
+        nav_solution: "Solution",
+        nav_roadmap: "Roadmap",
+        nav_ai_analysis: "AI Analysis",
+        efficiency_title: "Energy Efficiency Analysis",
+        efficiency_description: "Comparison between traditional technologies and our innovative holographic solution",
+        consumption_chart_title: "Energy Consumption by Technology",
+        consumption_chart_caption: "Energy consumption comparison in mW across different AR display technologies",
+        efficiency_chart_title: "Luminous Efficiency", 
+        efficiency_chart_caption: "Luminous efficacy measured in lumens per watt",
+        transparency_chart_title: "Transparency Levels",
+        transparency_chart_caption: "Optical transparency percentage for each technology",
+        performance_title: "Key Performance Metrics",
+        performance_description: "Our breakthrough results in AR display technology",
+        power_reduction_title: "Power Reduction",
+        power_reduction_desc: "energy consumption reduction",
+        transparency_improvement_title: "Transparency Improvement", 
+        transparency_improvement_desc: "optical transparency increase",
+        efficiency_gain_title: "Efficiency Gain",
+        efficiency_gain_desc: "luminous efficiency improvement",
+        challenges_title: "Technology Challenges",
+        challenges_description: "Key limitations of current AR systems that our project addresses",
+        challenge_power_title: "High Energy Consumption",
+        challenge_power_desc: "Current displays require too much power to be practical for portable devices",
+        challenge_transparency_title: "Limited Transparency",
+        challenge_transparency_desc: "Real-world visibility is compromised by traditional display technology",
+        challenge_efficiency_title: "Low Luminous Efficiency", 
+        challenge_efficiency_desc: "Inefficient conversion of electrical energy to visible light",
+        solution_title: "Our Holographic Solution",
+        solution_description: "An innovative approach that revolutionizes AR display efficiency",
+        solution_step1: "Low-power laser hologram generation",
+        solution_step2: "Adaptive optical modulation", 
+        solution_step3: "High-efficiency transparent projection",
+        technology_comparison_title: "Technology Comparison",
+        technology_comparison_description: "How our technology compares to existing solutions",
+        oled_title: "Traditional OLED",
+        oled_description: "Organic light-emitting displays with transparency limitations",
+        oled_rest: "Rest State",
+        oled_active: "Active State",
+        micro_led_title: "Micro-LED",
+        micro_led_description: "Miniaturized LEDs with good performance but high consumption",
+        micro_led_rest: "Rest State", 
+        micro_led_active: "Active State",
+        holographic_title: "Holo Lux Holographic System",
+        holographic_description: "Our revolutionary solution with maximum efficiency",
+        holographic_rest: "Rest State",
+        holographic_active: "Active State",
+        mirror: "Mirror",
+        transparent: "Transparent", 
+        roadmap_title: "Development Roadmap",
+        roadmap_description: "Our path to technology commercialization",
+        roadmap_step1_title: "Phase 1: Research & Prototyping",
+        roadmap_step1_desc: "Development of initial prototypes and concept validation",
+        roadmap_step2_title: "Phase 2: Optimization & Testing",
+        roadmap_step2_desc: "Performance improvements and durability testing",
+        roadmap_step3_title: "Phase 3: Pilot Production",
+        roadmap_step3_desc: "Implementation of pilot production line",
+        roadmap_step4_title: "Phase 4: Commercialization",
+        roadmap_step4_desc: "Product launch and market distribution",
+        ai_analysis_title: "AI Market Analysis",
+        ai_analysis_description: "AI-generated insights on market potential",
+        ai_result1_title: "Growth Forecast",
+        ai_result1_desc: "AR market is projected to grow 40% annually over the next 5 years",
+        ai_result2_title: "Efficiency Demand",
+        ai_result2_desc: "85% of consumers consider energy efficiency a key factor",
+        ai_result3_title: "Market Opportunity", 
+        ai_result3_desc: "Potential $15 billion market by 2030 for efficient AR displays",
+        footer_text: "© 2025 Holo Lux. Innovation in the future of AR displays."
+      }
+    };
+
+    let currentLanguage = 'it';
+
+    function updateTexts() {
+      const elements = document.querySelectorAll('[data-lang-key]');
+      elements.forEach(element => {
+        const key = element.getAttribute('data-lang-key');
+        if (translations[currentLanguage] && translations[currentLanguage][key]) {
+          element.textContent = translations[currentLanguage][key];
+        }
+      });
+      
+      const langBtn = document.getElementById('lang-toggle-btn');
+      if (langBtn) {
+        const flagSpan = langBtn.querySelector('span:first-child');
+        const textSpan = langBtn.querySelector('span:last-child');
+        
+        if (flagSpan && textSpan) {
+          if (currentLanguage === 'it') {
+            flagSpan.textContent = '🇺🇸';
+            textSpan.textContent = 'English';
+          } else {
+            flagSpan.textContent = '🇮🇹';
+            textSpan.textContent = 'Italiano';
+          }
+        }
+      }
+    }
+
+    function toggleLanguage() {
+      currentLanguage = currentLanguage === 'it' ? 'en' : 'it';
+      updateTexts();
+      if (typeof renderCharts === 'function') {
+        renderCharts();
+      }
+    }
+
+    // Theme management
+    function initializeTheme() {
+      const themeToggleBtn = document.getElementById('theme-toggle-btn');
+      const themeIcon = document.getElementById('theme-icon');
+      const html = document.documentElement;
+      
+      let currentTheme = localStorage.getItem('theme') || 'light';
+      html.classList.toggle('dark', currentTheme === 'dark');
+      updateThemeIcon(themeIcon, currentTheme);
+      
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+          html.classList.toggle('dark', currentTheme === 'dark');
+          localStorage.setItem('theme', currentTheme);
+          updateThemeIcon(themeIcon, currentTheme);
+          if (typeof renderCharts === 'function') {
+            setTimeout(() => renderCharts(), 100);
+          }
+        });
+      }
+    }
+
+    function updateThemeIcon(iconElement, theme) {
+      if (!iconElement) return;
+      iconElement.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+
+    // Smooth scrolling
+    function initializeSmoothScrolling() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+      
+      // Scroll to top button functionality
+      const scrollToTopBtn = document.getElementById('scroll-to-top');
+      if (scrollToTopBtn) {
+        // Show/hide button based on scroll position
+        window.addEventListener('scroll', () => {
+          if (window.pageYOffset > 300) {
+            scrollToTopBtn.classList.add('visible');
+          } else {
+            scrollToTopBtn.classList.remove('visible');
+          }
+        });
+        
+        // Scroll to top when clicked
+        scrollToTopBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    }
+
+    // Chart functions
+    function getChartColors(isDark = false) {
+      return {
+        primary: isDark ? '#4DA6FF' : '#0073E6',
+        secondary: isDark ? '#66B3FF' : '#0059B3', 
+        accent: isDark ? '#80C4FF' : '#004080',
+        background: isDark ? '#1F2937' : '#FFFFFF',
+        text: isDark ? '#F3F4F6' : '#374151',
+        grid: isDark ? '#374151' : '#E5E7EB'
+      };
+    }
+
+    function renderCharts() {
+      if (typeof Chart === 'undefined') return;
+      
+      setTimeout(() => {
+        createConsumptionChart();
+        createEfficiencyChart();
+        createTransparencyChart();
+      }, 150);
+    }
+
+    function createConsumptionChart() {
+      const canvas = document.getElementById('consumptionChart');
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      const isDark = document.documentElement.classList.contains('dark');
+      const colors = getChartColors(isDark);
+      
+      if (window.consumptionChartInstance) {
+        window.consumptionChartInstance.destroy();
+      }
+      
+      window.consumptionChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['OLED', 'Micro-LED', 'Holo Lux'],
+          datasets: [{
+            label: currentLanguage === 'it' ? 'Consumo (mW)' : 'Consumption (mW)',
+            data: [850, 650, 120],
+            backgroundColor: [
+              colors.accent + '80',
+              colors.secondary + '80', 
+              colors.primary + '80'
+            ],
+            borderColor: [colors.accent, colors.secondary, colors.primary],
+            borderWidth: 2,
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: {
+                color: colors.text,
+                font: { family: 'Inter, sans-serif', weight: '600' }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: colors.grid },
+              ticks: { color: colors.text, font: { family: 'Inter, sans-serif' } }
+            },
+            x: {
+              grid: { color: colors.grid },
+              ticks: { color: colors.text, font: { family: 'Inter, sans-serif', weight: '600' } }
+            }
+          }
+        }
+      });
+    }
+
+    function createEfficiencyChart() {
+      const canvas = document.getElementById('efficiencyChart');
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      const isDark = document.documentElement.classList.contains('dark');
+      const colors = getChartColors(isDark);
+      
+      if (window.efficiencyChartInstance) {
+        window.efficiencyChartInstance.destroy();
+      }
+      
+      window.efficiencyChartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['OLED', 'Micro-LED', 'Holo Lux'],
+          datasets: [{
+            data: [45, 65, 180],
+            backgroundColor: [
+              colors.accent + 'CC',
+              colors.secondary + 'CC',
+              colors.primary + 'CC'
+            ],
+            borderColor: [colors.accent, colors.secondary, colors.primary],
+            borderWidth: 3
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: colors.text,
+                font: { family: 'Inter, sans-serif', weight: '600' },
+                padding: 20
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function createTransparencyChart() {
+      const canvas = document.getElementById('transparencyChart');
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      const isDark = document.documentElement.classList.contains('dark');
+      const colors = getChartColors(isDark);
+      
+      if (window.transparencyChartInstance) {
+        window.transparencyChartInstance.destroy();
+      }
+      
+      window.transparencyChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['OLED', 'Micro-LED', 'Holo Lux'],
+          datasets: [{
+            label: currentLanguage === 'it' ? 'Trasparenza (%)' : 'Transparency (%)',
+            data: [25, 45, 95],
+            borderColor: colors.primary,
+            backgroundColor: colors.primary + '20',
+            borderWidth: 4,
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: colors.primary,
+            pointBorderColor: colors.background,
+            pointBorderWidth: 3,
+            pointRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: {
+                color: colors.text,
+                font: { family: 'Inter, sans-serif', weight: '600' }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              grid: { color: colors.grid },
+              ticks: { 
+                color: colors.text,
+                font: { family: 'Inter, sans-serif' },
+                callback: function(value) { return value + '%'; }
+              }
+            },
+            x: {
+              grid: { color: colors.grid },
+              ticks: { color: colors.text, font: { family: 'Inter, sans-serif', weight: '600' } }
+            }
+          }
+        }
+      });
+    }
+
+    // Page loader functionality
+    function hidePageLoader() {
+      const loader = document.getElementById('page-loader');
+      if (loader) {
+        setTimeout(() => {
+          loader.classList.add('hidden');
+          setTimeout(() => {
+            loader.style.display = 'none';
+          }, 500);
+        }, 300);
+      }
+    }
+
+    // Initialize everything when DOM loads
+    document.addEventListener('DOMContentLoaded', function() {
+      updateTexts();
+      initializeTheme();
+      initializeSmoothScrolling();
+      initializeScrollAnimations();
+      
+      const langBtn = document.getElementById('lang-toggle-btn');
+      if (langBtn) {
+        langBtn.addEventListener('click', toggleLanguage);
+      }
+      
+      // Wait for Chart.js to load before rendering charts
+      if (typeof Chart !== 'undefined') {
+        renderCharts();
+        hidePageLoader();
+      } else {
+        const checkChart = setInterval(() => {
+          if (typeof Chart !== 'undefined') {
+            clearInterval(checkChart);
+            renderCharts();
+            hidePageLoader();
+          }
+        }, 100);
+      }
+    });
+
+    // Scroll animations
+    function initializeScrollAnimations() {
+      // Respect user's reduced motion preference
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      
+      if (prefersReducedMotion.matches) {
+        // If user prefers reduced motion, just show elements immediately
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+          el.classList.add('in-view');
+        });
+        return;
+      }
+      
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            // Add staggered animation for grid items
+            if (entry.target.classList.contains('grid')) {
+              const children = entry.target.children;
+              Array.from(children).forEach((child, index) => {
+                setTimeout(() => {
+                  child.style.opacity = '1';
+                  child.style.transform = 'translateY(0)';
+                }, index * 100);
+              });
+            }
+          }
+        });
+      }, observerOptions);
+
+      // Observe all animatable elements
+      document.querySelectorAll('.animate-on-scroll, section, .step-card, .ai-result-card').forEach(el => {
+        observer.observe(el);
+      });
+
+      // Add parallax effect to header
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const header = document.querySelector('header');
+        if (header) {
+          header.style.transform = `translateY(${scrolled * 0.5}px)`;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
+
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 280px;
+    max-height: 40vh;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  
+  @media (min-width: 768px) {
+    .chart-container {
+      height: 380px;
+      max-height: 50vh;
+    }
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .animate-on-scroll.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stagger-animation:nth-child(1) { animation-delay: 0.1s; }
+  .stagger-animation:nth-child(2) { animation-delay: 0.2s; }
+  .stagger-animation:nth-child(3) { animation-delay: 0.3s; }
+  .stagger-animation:nth-child(4) { animation-delay: 0.4s; }
+  
+  .step-card {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .step-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .step-card:hover::before {
+    left: 100%;
+  }
+
+  .step-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 115, 230, 0.2);
+    border-color: rgba(0, 115, 230, 0.3);
+  }
+
+  .dark .step-card {
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.8) 0%, rgba(55, 65, 81, 0.6) 100%);
+    border-color: rgba(75, 85, 99, 0.3);
+  }
+
+  .dark .step-card:hover {
+    box-shadow: 0 20px 40px rgba(77, 166, 255, 0.3);
+    border-color: rgba(77, 166, 255, 0.5);
+  }
+  
+  .step-icon {
+    font-size: 3rem;
+    color: #0073E6;
+    margin-bottom: 1rem;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: inline-block;
+  }
+
+  .step-card:hover .step-icon {
+    transform: scale(1.2) rotate(10deg);
+    color: #004080;
+    text-shadow: 0 0 20px rgba(0, 115, 230, 0.5);
+  }
+  
+  .dark .step-icon {
+    color: #4DA6FF;
+  }
+
+  .dark .step-card:hover .step-icon {
+    color: #66B3FF;
+    text-shadow: 0 0 25px rgba(77, 166, 255, 0.6);
+  }
+  
+  .ai-result-card {
+    border-left-width: 5px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.9) 100%);
+  }
+
+  .ai-result-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,115,230,0.05), transparent);
+    transition: right 0.6s ease;
+  }
+
+  .ai-result-card:hover::after {
+    right: 100%;
+  }
+
+  .ai-result-card:hover {
+    transform: translateX(10px) scale(1.02);
+    box-shadow: -5px 15px 35px rgba(0, 115, 230, 0.15);
+    border-left-color: #0059B3;
+  }
+
+  .dark .ai-result-card {
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.95) 0%, rgba(55, 65, 81, 0.9) 100%);
+  }
+
+  .dark .ai-result-card:hover {
+    box-shadow: -5px 15px 35px rgba(77, 166, 255, 0.2);
+    border-left-color: #66B3FF;
+  }
+  
+  .ai-result-card h4 {
+    transition: all 0.3s ease;
+  }
+
+  .ai-result-card:hover h4 {
+    transform: translateX(5px);
+  }
+  
+  .settings-button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    color: white;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+  }
+  
+  .settings-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+</style>

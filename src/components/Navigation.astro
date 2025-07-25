@@ -1,0 +1,72 @@
+---
+// Navigation component with smooth scrolling
+---
+
+<nav class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg sticky top-0 z-50 transition-all duration-300 border-b border-gray-200/50 dark:border-gray-700/50">
+  <div class="container mx-auto px-4 sm:px-6 py-4">
+    <ul class="flex flex-wrap justify-center space-x-1 sm:space-x-4 md:space-x-8">
+      <li><a href="#efficiency" class="nav-link" data-lang-key="nav_efficiency"></a></li>
+      <li><a href="#challenges" class="nav-link" data-lang-key="nav_challenges"></a></li>
+      <li><a href="#solution" class="nav-link" data-lang-key="nav_solution"></a></li>
+      <li><a href="#roadmap" class="nav-link" data-lang-key="nav_roadmap"></a></li>
+      <li><a href="#ai-analysis" class="nav-link" data-lang-key="nav_ai_analysis"></a></li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .nav-link {
+    color: #0073E6;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  @media (min-width: 768px) {
+    .nav-link {
+      font-size: 1rem;
+    }
+  }
+  
+  .dark .nav-link {
+    color: #60A5FA;
+  }
+  
+  .nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0073E6, #004080);
+    transition: left 0.3s ease;
+    z-index: -1;
+    border-radius: 9999px;
+  }
+  
+  .nav-link:hover::before {
+    left: 0;
+  }
+
+  .dark .nav-link::before {
+    background: linear-gradient(135deg, #4DA6FF, #2563EB);
+  }
+  
+  .nav-link:hover {
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 115, 230, 0.3);
+  }
+
+  .dark .nav-link:hover {
+    color: white;
+    box-shadow: 0 8px 25px rgba(77, 166, 255, 0.4);
+  }
+</style>

@@ -1,0 +1,42 @@
+---
+// Performance metric card component
+export interface Props {
+  title: string;
+  value: string;
+  description: string;
+  valueColor?: string;
+}
+
+const { title, description, value, valueColor = "text-[#004080] dark:text-blue-300" } = Astro.props;
+---
+
+<div class="group bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-lg hover:shadow-2xl p-8 text-center flex flex-col justify-center items-center transform transition-all duration-500 hover:scale-105 animate-on-scroll border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden">
+  <!-- Background decoration -->
+  <div class="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
+    <div class="absolute top-4 right-4 text-6xl">📊</div>
+    <div class="absolute bottom-4 left-4 text-4xl">✨</div>
+  </div>
+  
+  <!-- Main content -->
+  <div class="relative z-10">
+    <h3 class="text-xl md:text-2xl font-bold text-[#0073E6] dark:text-blue-400 mb-6 group-hover:scale-105 transition-transform duration-300" data-lang-key={title}></h3>
+    
+    <!-- Animated value with counter effect -->
+    <div class="relative mb-6">
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 dark:from-blue-400/20 dark:to-purple-400/20 rounded-full blur-2xl group-hover:blur-xl transition-all duration-500"></div>
+      <p class={`relative text-6xl md:text-8xl font-black ${valueColor} group-hover:scale-110 transition-all duration-500 filter drop-shadow-lg`} style="animation: pulse 2s infinite;">
+        {value}
+      </p>
+    </div>
+    
+    <p class="text-base md:text-lg text-gray-600 dark:text-gray-400 font-medium group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300" data-lang-key={description}></p>
+  </div>
+  
+  <!-- Hover glow effect -->
+  <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+  
+  <!-- Progress bar at bottom -->
+  <div class="absolute bottom-0 left-0 w-full h-1 bg-gray-200 dark:bg-gray-700">
+    <div class="h-full bg-gradient-to-r from-[#0073E6] to-[#004080] dark:from-[#4DA6FF] dark:to-[#2563EB] w-0 group-hover:w-full transition-all duration-1000 ease-out"></div>
+  </div>
+</div>

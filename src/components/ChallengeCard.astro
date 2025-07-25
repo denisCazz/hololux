@@ -1,0 +1,49 @@
+---
+// Challenge card component for displaying technology challenges
+export interface Props {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+const { icon, title, description } = Astro.props;
+---
+
+<div class="group bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-lg hover:shadow-2xl p-6 md:p-8 transform transition-all duration-500 hover:scale-105 hover:-rotate-1 animate-on-scroll border border-gray-200/30 dark:border-gray-700/30 relative overflow-hidden">
+  <!-- Background glow effect -->
+  <div class="absolute inset-0 bg-gradient-to-br from-red-500/5 via-orange-500/5 to-yellow-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+  
+  <!-- Warning pattern -->
+  <div class="absolute top-0 right-0 w-16 h-16 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
+    <div class="w-full h-full bg-gradient-to-br from-orange-500 to-red-500 rounded-bl-2xl"></div>
+  </div>
+  
+  <!-- Main content -->
+  <div class="relative z-10">
+    <!-- Icon and title row -->
+    <div class="flex items-start space-x-4 mb-4">
+      <div class="flex-shrink-0 text-3xl md:text-4xl group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 filter drop-shadow-lg">
+        {icon}
+      </div>
+      <div class="flex-1">
+        <h3 class="text-xl md:text-2xl font-bold text-[#0073E6] dark:text-blue-400 mb-2 group-hover:text-[#004080] dark:group-hover:text-blue-300 transition-colors duration-300" data-lang-key={title}></h3>
+      </div>
+    </div>
+    
+    <!-- Description -->
+    <p class="text-gray-600 dark:text-gray-400 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300" data-lang-key={description}></p>
+    
+    <!-- Challenge indicator -->
+    <div class="mt-6 flex items-center space-x-2">
+      <div class="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+      <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
+      <div class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+      <span class="text-xs text-gray-500 dark:text-gray-400 ml-2 font-medium opacity-70 group-hover:opacity-100 transition-opacity duration-300">Challenge</span>
+    </div>
+  </div>
+  
+  <!-- Shine effect -->
+  <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 rounded-2xl"></div>
+  </div>
+</div>
