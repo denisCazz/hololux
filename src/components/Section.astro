@@ -1,5 +1,5 @@
 ---
-// Section wrapper component
+// Section wrapper component, header-style tech look
 export interface Props {
   id: string;
   title: string;
@@ -10,27 +10,26 @@ export interface Props {
 const { id, title, description, className = '' } = Astro.props;
 ---
 
-<section id={id} class={`mb-16 md:mb-24 relative ${className}`}>
-  <!-- Background decoration -->
-  <div class="absolute inset-0 -z-10 opacity-5">
-    <div class="absolute top-0 left-1/4 w-64 h-64 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-0 right-1/4 w-48 h-48 bg-gradient-to-tr from-green-400 to-blue-500 rounded-full blur-3xl"></div>
+<section id={id} class={`relative mb-20 md:mb-32 px-4 md:px-0 max-w-5xl mx-auto ${className}`}>
+  <!-- Tech grid background -->
+  <div class="absolute inset-0 opacity-10 pointer-events-none -z-10">
+    <div class="absolute inset-0 bg-[radial-gradient(circle,rgba(34,193,195,0.10)_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-transparent via-blue-700/10 to-transparent"></div>
+    <div class="absolute top-0 left-1/4 w-64 h-64 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 right-1/4 w-48 h-48 bg-gradient-to-tr from-cyan-400/20 to-blue-500/20 rounded-full blur-3xl"></div>
   </div>
-  
+
   <!-- Section header -->
-  <div class="text-center mb-12 md:mb-16 animate-on-scroll">
-    <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-[#0059B3] dark:text-blue-400 mb-6 bg-gradient-to-r from-[#0059B3] to-[#0073E6] dark:from-blue-400 dark:to-blue-300 bg-clip-text text-transparent" data-lang-key={title}></h2>
-    <div class="max-w-4xl mx-auto">
-      <p class="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed px-4" data-lang-key={description}></p>
-      <!-- Decorative line -->
-      <div class="mt-8 flex justify-center">
-        <div class="w-24 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
-      </div>
+  <div class="text-center mb-12 md:mb-16">
+    <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent mb-4 select-none" data-lang-key={title}></h2>
+    <div class="max-w-3xl mx-auto">
+      <p class="text-lg md:text-2xl text-cyan-200 font-mono leading-relaxed mb-4" data-lang-key={description}></p>
+      <div class="h-1 w-24 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto rounded-full"></div>
     </div>
   </div>
-  
+
   <!-- Section content -->
-  <div class="animate-on-scroll">
+  <div class="relative z-10 animate-on-scroll">
     <slot />
   </div>
 </section>

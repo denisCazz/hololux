@@ -1,5 +1,5 @@
 ---
-// Roadmap step card component
+// Roadmap step card, header-style tech look
 export interface Props {
   stepNumber: string;
   title: string;
@@ -10,37 +10,37 @@ export interface Props {
 const { stepNumber, title, description, icon } = Astro.props;
 ---
 
-<div class="step-card group animate-on-scroll stagger-animation relative">
-  <!-- Step number badge -->
-  <div class="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-br from-[#0073E6] to-[#004080] dark:from-[#4DA6FF] dark:to-[#2563EB] rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg z-10 group-hover:scale-110 transition-transform duration-300">
+<div class="w-full relative group bg-slate-900/95 backdrop-blur-xl border border-cyan-500/40 rounded-xl lg:rounded-xl xl:rounded-2xl shadow-2xl hover:shadow-cyan-500/30 p-4 sm:p-5 lg:p-6 xl:p-8 transition-all duration-500 hover:scale-[1.02] lg:hover:scale-[1.01] hover:border-cyan-400/60 overflow-hidden animate-on-scroll min-h-[180px] lg:min-h-[200px] xl:min-h-[220px]">
+  <!-- Enhanced tech grid background for better visibility -->
+  <div class="absolute inset-0 opacity-15 lg:opacity-18 pointer-events-none z-0">
+    <div class="absolute inset-0 bg-[radial-gradient(circle,rgba(6,182,212,0.15)_1px,transparent_1px)] bg-[size:20px_20px] lg:bg-[size:24px_24px]"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/8 via-blue-500/8 to-purple-500/8"></div>
+    <div class="absolute top-0 right-0 w-24 h-24 lg:w-32 lg:h-32 bg-gradient-to-bl from-cyan-400/20 to-transparent rounded-full blur-2xl lg:blur-3xl"></div>
+  </div>
+  
+  <!-- Step number badge with enhanced visibility -->
+  <div class="absolute -top-2 -left-2 lg:-top-3 lg:-left-3 w-6 h-6 lg:w-8 lg:h-8 xl:w-10 xl:h-10 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xs lg:text-sm xl:text-base shadow-xl shadow-cyan-500/50 border-2 border-white z-10 group-hover:scale-110 transition-transform duration-300 select-none">
     {stepNumber}
   </div>
-  
   <!-- Main content -->
-  <div class="pt-8 px-6 pb-6 h-full flex flex-col">
-    <!-- Icon with glow effect -->
-    <div class="text-center mb-6">
-      <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-700 dark:to-gray-600 rounded-2xl mb-4 group-hover:scale-110 transition-all duration-500">
-        <i class={`fas ${icon} step-icon text-3xl`}></i>
+  <div class="pt-6 lg:pt-8 px-2 lg:px-6 pb-2 lg:pb-6 h-full flex flex-col">
+    <div class="text-center mb-4 lg:mb-6">
+      <div class="inline-flex items-center justify-center w-12 h-12 lg:w-20 lg:h-20 bg-gradient-to-br from-cyan-400/10 to-blue-100/10 dark:from-gray-700 dark:to-gray-600 rounded-xl lg:rounded-2xl mb-3 lg:mb-4 group-hover:scale-110 transition-all duration-500">
+        <i class={`fas ${icon} step-icon text-xl lg:text-3xl`}></i>
       </div>
     </div>
-    
-    <!-- Content -->
-    <div class="flex-1 text-center">
-      <h3 class="text-xl md:text-2xl font-bold text-[#0073E6] dark:text-blue-400 mb-4 group-hover:text-[#004080] dark:group-hover:text-blue-300 transition-colors duration-300" data-lang-key={title}></h3>
-      <p class="text-gray-600 dark:text-gray-400 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300" data-lang-key={description}></p>
+    <div class="flex-1 text-center flex flex-col justify-center">
+      <h3 class="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-extrabold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent mb-2 lg:mb-4 select-none" data-lang-key={title}></h3>
+      <p class="text-sm lg:text-base xl:text-lg text-cyan-200 font-mono mb-3 lg:mb-6 leading-relaxed flex-grow" data-lang-key={description}></p>
     </div>
-    
-    <!-- Progress indicator -->
-    <div class="mt-6 flex items-center justify-center">
-      <div class="flex space-x-2">
-        <div class="w-2 h-2 bg-[#0073E6] dark:bg-blue-400 rounded-full opacity-100"></div>
-        <div class="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full opacity-50 group-hover:opacity-100 group-hover:bg-[#0073E6] dark:group-hover:bg-blue-400 transition-all duration-300"></div>
-        <div class="w-2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full opacity-30 group-hover:opacity-75 group-hover:bg-[#0073E6] dark:group-hover:bg-blue-400 transition-all duration-500"></div>
+    <div class="flex items-center justify-center flex-shrink-0">
+      <div class="flex space-x-1.5 lg:space-x-2">
+        <div class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-cyan-400 rounded-full opacity-100"></div>
+        <div class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-purple-400 rounded-full opacity-50 group-hover:opacity-100 group-hover:bg-cyan-400 transition-all duration-300"></div>
+        <div class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-purple-400 rounded-full opacity-30 group-hover:opacity-75 group-hover:bg-cyan-400 transition-all duration-500"></div>
       </div>
     </div>
   </div>
-  
   <!-- Shine effect on hover -->
   <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
